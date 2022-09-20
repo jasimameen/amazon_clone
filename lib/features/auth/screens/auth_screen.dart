@@ -2,6 +2,7 @@ import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/constants.dart';
 import 'package:amazon_clone/constants/global_vaiables.dart';
+import 'package:amazon_clone/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -20,12 +21,14 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   Auth groupValue = Auth.signUp;
   // form keys
-  final _sugnUpFormKey = GlobalKey<FormState>();
-  final _sugnInFormKey = GlobalKey<FormState>();
+  final _signUpFormKey = GlobalKey<FormState>();
+  final _signInFormKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   @override
   void dispose() {
@@ -33,6 +36,15 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void signUpUser() {
+    _authService.signUpUser(
+        _emailController.text, _passwordController.text, _nameController.text);
+  }
+
+  void signInUser() {
+    //
   }
 
   @override
@@ -84,7 +96,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Form _buildSignUpForm() {
     return Form(
-      key: _sugnUpFormKey,
+      key: _signUpFormKey,
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(10),
@@ -108,7 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
             dummyHeight,
             CustomButton(
               onTap: () {
-                _sugnUpFormKey.currentState?.validate();
+                if (_signUpFormKey.currentState!.validate()) signUpUser();
               },
               label: "Create Account",
             )
@@ -120,7 +132,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Form _buildSignInForm() {
     return Form(
-      key: _sugnInFormKey,
+      key: _signInFormKey,
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(10),
@@ -139,7 +151,7 @@ class _AuthScreenState extends State<AuthScreen> {
             dummyHeight,
             CustomButton(
               onTap: () {
-                _sugnInFormKey.currentState?.validate();
+                if(_signInFormKey.currentState!.validate()) signInUser();
               },
               label: "Sign In",
             )

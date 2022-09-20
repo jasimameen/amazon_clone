@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 /// contains all the static variables
-/// 
+///
 /// eg: Colors, images, Styles... etc
 class GlobalVariables {
   // COLORS
@@ -16,6 +19,6 @@ class GlobalVariables {
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundCOlor = Color(0xffebecee);
-  static var selectedNavBarColor = Colors.cyan[800]!;
+  static Color selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
 }
