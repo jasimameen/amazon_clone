@@ -1,6 +1,6 @@
-const e = require('express');
 const express = require('express');
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -16,6 +16,7 @@ authRouter.post('/api/signup', async (req, res) => {
 
         // save to db
         const excistingUser = await User.findOne({ email }); // search by field
+
         if (excistingUser) {
             return res.status(400).json({ msg: "User with same email already excits" })
         }
@@ -23,7 +24,7 @@ authRouter.post('/api/signup', async (req, res) => {
         let user = new User({
             name,
             email,
-            password : hashedPassword,
+            password: hashedPassword,
         });
 
         user = await user.save(); // update to DB
@@ -32,6 +33,31 @@ authRouter.post('/api/signup', async (req, res) => {
         return res.json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+});
+
+// SIGN IN
+authRouter.post('/api/signin', async (req, res) => {
+
+    try {
+        // get data from client
+        const { email, password } = req.body;
+
+        // find user
+        const user = await User.findOne({ email });
+
+        if (!user) return res.status(400).json({ msg: "No User Found!" });
+
+        const isValidPassword = await bcryptjs.compare(password, user.password);
+
+        if (!isValidPassword) return res.status(400).json({ msg: 'Login Credentials does not Match' })
+
+        const token = jwt.sign({ id: user._id }, "passwordKey");
+
+        res.json({ token, ...user._doc });
+
+    } catch (error) {
+        res.status(500).json({ error: e.message });
     }
 });
 
