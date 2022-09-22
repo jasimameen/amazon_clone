@@ -1,7 +1,14 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
+
+BuildContext get currentContext => scaffoldMessengerKey.currentContext!;
+
+/// Key for accesing JsonWebToken from persitsted storage 
+const String X_AUTH_TOKEN = 'x-auth-token';
 
 /// contains all the static variables
 ///

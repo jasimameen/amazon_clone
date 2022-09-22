@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:amazon_clone/constants/utils.dart';
+import 'utils.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 
