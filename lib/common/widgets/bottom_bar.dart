@@ -1,6 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:amazon_clone/constants/global_vaiables.dart';
+import 'package:amazon_clone/features/account/screens/acount_screen.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+
+import 'custom_bottom_nav_bar_icon.dart';
 
 class BottomBar extends StatefulWidget {
   static const routeName = '/actual-home';
@@ -11,24 +16,35 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _page = 0;
+  int _currentIndex = 0;
   double bottomNavBarWidth = 42;
   double bottomNavBarBoderWidth = 5;
+
+  List<Widget> pages = [
+    const HomeScreen(),
+    const AccountScreen(),
+    const Center(child: Text("User Cart")),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // screens
+      body: pages[_currentIndex],
+
+      // Navigaton bar
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
+        currentIndex: _currentIndex,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
+        onTap: updatePage,
         items: [
           // home
           BottomNavigationBarItem(
-            icon: _CustomBottomNavBarIcon(
-              currentPageIndex: _page,
+            icon: CustomBottomNavBarIcon(
+              currentPageIndex: _currentIndex,
               itemIndex: 0,
               iconData: Icons.home_outlined,
             ),
@@ -37,8 +53,8 @@ class _BottomBarState extends State<BottomBar> {
 
           // Account
           BottomNavigationBarItem(
-            icon: _CustomBottomNavBarIcon(
-              currentPageIndex: _page,
+            icon: CustomBottomNavBarIcon(
+              currentPageIndex: _currentIndex,
               itemIndex: 1,
               iconData: Icons.person_outlined,
             ),
@@ -47,10 +63,15 @@ class _BottomBarState extends State<BottomBar> {
 
           // Cart
           BottomNavigationBarItem(
-            icon: _CustomBottomNavBarIcon(
-              currentPageIndex: _page,
-              itemIndex: 2,
-              iconData: Icons.local_grocery_store_outlined,
+            icon: Badge(
+              elevation: 0,
+              badgeColor: Colors.white,
+              badgeContent: const Text('5'),
+              child: CustomBottomNavBarIcon(
+                currentPageIndex: _currentIndex,
+                itemIndex: 2,
+                iconData: Icons.local_grocery_store_outlined,
+              ),
             ),
             label: '',
           ),
@@ -58,39 +79,7 @@ class _BottomBarState extends State<BottomBar> {
       ),
     );
   }
+
+  void updatePage(index) => setState(() => _currentIndex = index);
 }
 
-class _CustomBottomNavBarIcon extends StatelessWidget {
-  final int currentPageIndex;
-  final int itemIndex;
-  final IconData iconData;
-
-  const _CustomBottomNavBarIcon({
-    Key? key,
-    required this.currentPageIndex,
-    required this.itemIndex,
-    required this.iconData,
-  }) : super(key: key);
-
-  final double bottomNavBarWidth = 42;
-  final double bottomNavBarBoderWidth = 5;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: bottomNavBarWidth,
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color:
-                currentPageIndex == itemIndex // checks selected or unselected
-                    ? GlobalVariables.selectedNavBarColor
-                    : GlobalVariables.backgroundColor,
-            width: bottomNavBarBoderWidth,
-          ),
-        ),
-      ),
-      child: Icon(iconData),
-    );
-  }
-}

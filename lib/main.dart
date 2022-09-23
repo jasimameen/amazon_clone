@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -64,9 +65,9 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: routes,
 
-      // user redireted to home if alredy logged in
+      // user redireted to MainScreen if alredy logged in
       // else Login screen shows
-      home: isTokenEmpty ? const AuthScreen() : const HomeScreen(),
+      home: isTokenEmpty ? const AuthScreen() : const BottomBar(),
 
     );
   }

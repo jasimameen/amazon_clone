@@ -7,7 +7,7 @@ GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
 
 BuildContext get currentContext => scaffoldMessengerKey.currentContext!;
 
-/// Key for accesing JsonWebToken from persitsted storage 
+/// Key for accesing JsonWebToken from persitsted storage
 const String X_AUTH_TOKEN = 'x-auth-token';
 
 /// contains all the static variables
@@ -29,4 +29,7 @@ class GlobalVariables {
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static Color selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
+
+  // Images
+  static const amazonLogo = 'assets/images/amazon_in.png';
 }
