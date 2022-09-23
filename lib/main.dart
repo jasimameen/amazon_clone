@@ -1,19 +1,46 @@
-import 'package:amazon_clone/constants/global_vaiables.dart';
-import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
-import 'package:amazon_clone/router.dart';
+import 'package:amazon_clone/features/auth/services/auth_service.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'constants/global_vaiables.dart';
+import 'features/auth/screens/auth_screen.dart';
+import 'router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    AuthService().getUserData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // token excits or not
+    final isTokenEmpty = Provider.of<UserProvider>(context).user.token.isEmpty;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,
       title: 'Amazon Clone',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
@@ -35,27 +62,12 @@ class MyApp extends StatelessWidget {
               (states) => GlobalVariables.secondaryColor),
         ),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Amazon Clone'),
-        ),
-        body: Center(
-            child: Column(
-          children: [
-            const Text('Flutter Amazn Home Page'),
-            Builder(builder: (context) {
-              return ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  },
-                  child: const Text('Go to Auth'));
-            })
-          ],
-        )),
-      ),
+      routes: routes,
 
-      // routing
-      onGenerateRoute: (settings) => generateRoute(settings),
+      // user redireted to home if alredy logged in
+      // else Login screen shows
+      home: isTokenEmpty ? const AuthScreen() : const HomeScreen(),
+
     );
   }
 }

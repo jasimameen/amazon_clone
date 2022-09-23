@@ -1,20 +1,16 @@
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:flutter/widgets.dart';
 
-Route<dynamic> generateRoute(RouteSettings settings) {
-  switch (settings.name) {
-    case AuthScreen.routeName:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => const AuthScreen(),
-      );
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-    default:
-      return MaterialPageRoute(
-        settings: settings,
-        builder: (_) => const Scaffold(
-          body: Center(child: Text("Page Not Found")),
-        ),
-      );
-  }
-}
+NavigatorState navigation = navigatorKey.currentState!;
+
+Map<String, Widget Function(BuildContext)> routes =
+     <String, WidgetBuilder>{
+      AuthScreen.routeName:(context) => const AuthScreen(),
+      HomeScreen.routeName:(context) => const HomeScreen(),
+      BottomBar.routeName :(context) => const BottomBar(),
+    };
+

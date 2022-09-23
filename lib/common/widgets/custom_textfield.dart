@@ -28,7 +28,10 @@ class CustomTextField extends StatelessWidget {
         hintText: hintText,
       ),
       validator: (value) {
-        // validation logic
+        if (value == null || value.isEmpty) {
+          return '$hintText must not be empty';
+        }
+        return null;
       },
 
       obscureText: obscureText,
