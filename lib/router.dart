@@ -13,3 +13,4 @@ Map<String, Widget Function(BuildContext)> routes =
       HomeScreen.routeName:(context) => const HomeScreen(),
       BottomBar.routeName :(context) => const BottomBar(),
     };
+

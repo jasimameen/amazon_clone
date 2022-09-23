@@ -3,6 +3,7 @@ import '../../../common/widgets/custom_textfield.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/global_vaiables.dart';
 import '../services/auth_service.dart';
+
 import 'package:flutter/material.dart';
 
 enum Auth {
@@ -23,6 +24,7 @@ class _AuthScreenState extends State<AuthScreen> {
   // form keys
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
+
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -97,6 +99,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Form _buildSignUpForm() {
     return Form(
       key: _signUpFormKey,
+
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(10),
@@ -121,6 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
             CustomButton(
               onTap: () {
                 if (_signUpFormKey.currentState!.validate()) signUpUser();
+
               },
               label: "Create Account",
             )
@@ -152,6 +156,7 @@ class _AuthScreenState extends State<AuthScreen> {
             CustomButton(
               onTap: () {
                 if (_signInFormKey.currentState!.validate()) signInUser();
+
               },
               label: "Sign In",
             )

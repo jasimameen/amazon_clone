@@ -33,6 +33,7 @@ class CustomTextField extends StatelessWidget {
         }
         return null;
       },
+
       obscureText: obscureText,
     );
   }

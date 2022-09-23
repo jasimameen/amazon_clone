@@ -12,6 +12,7 @@ const String X_AUTH_TOKEN = 'x-auth-token';
 
 /// contains all the static variables
 ///
+
 /// eg: Colors, images, Styles... etc
 class GlobalVariables {
   // COLORS
