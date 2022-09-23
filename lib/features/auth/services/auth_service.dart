@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
+
 import '../../../constants/apis.dart';
 import '../../../constants/error_handle.dart';
 import '../../../constants/utils.dart';
@@ -37,6 +39,9 @@ class AuthService {
         response: resp,
         onSuccess: () {
           showSnakBar('Accound Create SuccessFully!');
+
+          // signIn new user
+          signInUser(email, password);
         },
       );
     } catch (error) {
@@ -66,7 +71,7 @@ class AuthService {
           await pref.setString(X_AUTH_TOKEN, json.decode(resp.body)['token']);
 
           navigation.pushNamedAndRemoveUntil(
-              HomeScreen.routeName, (route) => false);
+              BottomBar.routeName, (route) => false);
         },
       );
     } catch (error) {
