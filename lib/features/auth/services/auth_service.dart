@@ -110,6 +110,8 @@ class AuthService {
           // update userdata in the state
           Provider.of<UserProvider>(currentContext, listen: false)
               .setUser(value.body);
+        }).catchError((_) {
+          return;
         });
       }
     } catch (error) {
